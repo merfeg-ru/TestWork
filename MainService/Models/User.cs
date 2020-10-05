@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MainService.Models
 {
-    internal class User
-    {
-        internal string FirstName { get; set; }
-        internal string LastName { get; set; }
-        internal string MiddleName { get; set; }
-        internal string PhoneNumber { get; set; }
-        internal string EMail { get; set; }
 
+    public class User
+    {
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Не указано имя")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Не указана фамилия")]
+        public string LastName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        [Required(ErrorMessage = "Не указан номер")]
+        public string PhoneNumber { get; set; }
+
+        [EmailAddress(ErrorMessage = "Неверно указан EMail")]
+        public string EMail { get; set; }
     }
 }
