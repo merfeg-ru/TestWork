@@ -22,10 +22,8 @@ namespace MainService.Controllers
         [HttpPost]
         public IActionResult Post(User user)
         {
-            if (ModelState.IsValid)
-                return Ok(user);
-            else
-                return ValidationProblem();
+            _logger.LogWarning($"Передача в шину данных выполнена [{user}]");
+            return Ok(user);
         }
 
         [HttpGet]

@@ -9,7 +9,6 @@ namespace MainService.Models
 
     public class User
     {
-        [Display(Name = "Name")]
         [Required(ErrorMessage = "Не указано имя")]
         public string FirstName { get; set; }
 
@@ -23,5 +22,11 @@ namespace MainService.Models
 
         [EmailAddress(ErrorMessage = "Неверно указан EMail")]
         public string EMail { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName} {MiddleName} {PhoneNumber} {EMail}";
+        }
     }
 }
