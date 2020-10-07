@@ -23,10 +23,9 @@ namespace MainService.Models
         [EmailAddress(ErrorMessage = "Неверно указан EMail")]
         public string EMail { get; set; }
 
-
         public override string ToString()
         {
-            return $"{LastName} {FirstName} {MiddleName} {PhoneNumber} {EMail}";
+            return $"LastName:{LastName} FirstName:{FirstName} MiddleName:{MiddleName} PhoneNumber:{PhoneNumber} EMail:{EMail}";
         }
     }
 }

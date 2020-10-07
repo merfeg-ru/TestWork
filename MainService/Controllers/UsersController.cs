@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MainService.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,18 @@ namespace MainService.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
+        private readonly IDataSenderService _dataSenderService;
 
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(ILogger<UsersController> logger, IDataSenderService dataSenderService)
         {
             _logger = logger;
+            _dataSenderService = dataSenderService;
         }
 
         [HttpPost]
-        public IActionResult Post(User user)
+        public async Task<IActionResult> Post(User user, CancellationToken cancellationToken)
         {
-            _logger.LogWarning($"Передача в шину данных выполнена [{user}]");
+            await _dataSenderService.Send(user, cancellationToken);
             return Ok(user);
         }
 

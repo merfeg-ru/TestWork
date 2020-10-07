@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using MainService.Extensions;
 
 namespace MainService
 {
@@ -26,6 +27,7 @@ namespace MainService
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .RegisterDataSenderServices(Configuration)
                 .AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {

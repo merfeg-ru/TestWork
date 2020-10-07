@@ -2,15 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MainService
 {
-    public class DataSender : IDataSender
+    public interface IDataSenderService
     {
-        public void Send(User user)
-        {
-            throw new NotImplementedException();
-        }
+        Task Send(User user, CancellationToken cancellationToken);
     }
 }

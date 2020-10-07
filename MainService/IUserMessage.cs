@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MainService
 {
-    interface IDataSender
+    public interface IUserMessage
     {
-        void Send(User user);
+        Guid MessageId { get; set; }
+        User User { get; set; }
+        DateTime CreationDate { get; set; }
     }
 }
