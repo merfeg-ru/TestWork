@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MainService.Extensions
 {
-    public static class DataSenderSerivceExtension
+    public static class DataBusSenderExtension
     {
         public static IServiceCollection RegisterDataSenderServices(this IServiceCollection services, IConfiguration section)
         {
@@ -29,7 +29,7 @@ namespace MainService.Extensions
             services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
-            services.AddSingleton<IDataSenderService, DataSenderService>();
+            services.AddSingleton<IDataBusSenderService, DataBusSenderService>();
 
             return services;
         }

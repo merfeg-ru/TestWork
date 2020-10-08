@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MainService
 {
-    public interface IDataSenderService
+    public interface IDataBusSenderService
     {
-        Task Send(User user, CancellationToken cancellationToken);
+        Task<bool> Send(User user, CancellationToken cancellationToken);
     }
 }

@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace MainService
 {
-    public class DataSenderService : IDataSenderService
+    public class DataBusSenderService : IDataBusSenderService
     {
-        private readonly ILogger<DataSenderService> _logger;
+        private readonly ILogger<DataBusSenderService> _logger;
         private readonly IPublishEndpoint _endpoint;
 
 
-        public DataSenderService(ILogger<DataSenderService> logger, IPublishEndpoint endpoint)
+        public DataBusSenderService(ILogger<DataBusSenderService> logger, IPublishEndpoint endpoint)
         {
             _logger = logger;
             _endpoint = endpoint;
         }
 
-        public async Task Send(User request, CancellationToken cancellationToken)
+        public async Task<bool> Send(User request, CancellationToken cancellationToken)
         {
             try
             {
@@ -34,10 +34,12 @@ namespace MainService
 
                 await _endpoint.Publish<IUserMessage>(userMessage, cancellationToken);
                 _logger.LogWarning($"Передача в шину данных выполнена [{userMessage}]");
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return false;
             }
         }
     }

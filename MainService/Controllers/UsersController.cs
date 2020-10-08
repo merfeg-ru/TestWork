@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MainService.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,19 +14,23 @@ namespace MainService.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly ILogger<UsersController> _logger;
-        private readonly IDataSenderService _dataSenderService;
+        private readonly IMediator _mediator;
 
-        public UsersController(ILogger<UsersController> logger, IDataSenderService dataSenderService)
+        public UsersController(IMediator mediator)
         {
-            _logger = logger;
-            _dataSenderService = dataSenderService;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(User user, CancellationToken cancellationToken)
         {
-            await _dataSenderService.Send(user, cancellationToken);
+            bool commandResult = await _mediator.Send(user);
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
             return Ok(user);
         }
 
