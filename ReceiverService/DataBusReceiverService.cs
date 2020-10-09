@@ -7,5 +7,6 @@ namespace ReceiverService
 {
     public class DataBusReceiverService
     {
+
     }
 }

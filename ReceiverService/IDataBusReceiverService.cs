@@ -7,5 +7,6 @@ namespace ReceiverService
 {
     public interface IDataBusReceiverService
     {
+
     }
 }
