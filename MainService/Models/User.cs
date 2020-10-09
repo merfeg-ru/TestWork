@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using CommonData;
+using MediatR;
 
 namespace SenderService.Models
 {
 
-    public class User : IRequest<bool>
+    public class User : IUser, IRequest<bool>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

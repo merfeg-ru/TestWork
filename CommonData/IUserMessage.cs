@@ -1,12 +1,11 @@
-﻿using SenderService.Models;
-using System;
+﻿using System;
 
-namespace SenderService
+namespace CommonData
 {
     public interface IUserMessage
     {
         Guid MessageId { get; set; }
-        User User { get; set; }
+        IUser User { get; set; }
         DateTime CreationDate { get; set; }
     }
 }

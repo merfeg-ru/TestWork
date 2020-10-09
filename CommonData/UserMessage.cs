@@ -1,12 +1,11 @@
-﻿using SenderService.Models;
-using System;
+﻿using System;
 
-namespace SenderService
+namespace CommonData
 {
     public class UserMessage : IUserMessage
     {
         public Guid MessageId { get; set; }
-        public User User { get; set; }
+        public IUser User { get; set; }
         public DateTime CreationDate { get; set; }
 
         public override string ToString()
