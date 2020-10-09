@@ -1,11 +1,7 @@
 ﻿using FluentValidation;
-using MainService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SenderService.Models;
 
-namespace MainService.Validators
+namespace SenderService.Validators
 {
 	public class UserValidator : AbstractValidator<User>
 	{

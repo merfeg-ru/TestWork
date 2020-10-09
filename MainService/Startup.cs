@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using MainService.Extensions;
+using SenderService.Extensions;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using MainService.Models;
-using MainService.Validators;
+using SenderService.Models;
+using SenderService.Validators;
 using MediatR;
 using System.Reflection;
 
-namespace MainService
+namespace SenderService
 {
     public class Startup
     {
@@ -42,8 +35,11 @@ namespace MainService
                         };
                     });
 
+            // Validator
             services.AddTransient<IValidator<User>, UserValidator>();
+            // Bus
             services.RegisterDataSenderServices(Configuration);
+            // MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
@@ -57,8 +53,6 @@ namespace MainService
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,11 +1,8 @@
-﻿using MainService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SenderService.Models;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MainService
+namespace SenderService
 {
     public interface IDataBusSenderService
     {

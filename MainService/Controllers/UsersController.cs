@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MainService.Models;
+using SenderService.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace MainService.Controllers
+namespace SenderService.Controllers
 {
     [ApiController]
     [Route("[controller]")]

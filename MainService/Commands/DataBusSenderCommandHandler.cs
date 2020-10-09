@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MainService.Models;
+using SenderService.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace MainService.Commands
+namespace SenderService.Commands
 {
     public class DataBusSenderCommandHandler : IRequestHandler<User, bool>
     {

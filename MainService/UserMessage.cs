@@ -1,10 +1,7 @@
-﻿using MainService.Models;
+﻿using SenderService.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MainService
+namespace SenderService
 {
     public class UserMessage : IUserMessage
     {
