@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
@@ -14,6 +13,13 @@
     <PackageReference Include="MassTransit" Version="7.0.4" />
     <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.0.4" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.0.4" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommonData\CommonData.csproj" />
   </ItemGroup>
 
 

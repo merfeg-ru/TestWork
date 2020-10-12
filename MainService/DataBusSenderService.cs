@@ -16,8 +16,8 @@ namespace SenderService
 
         public DataBusSenderService(ILogger<DataBusSenderService> logger, IPublishEndpoint endpoint)
         {
-            _logger = logger;
-            _endpoint = endpoint;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
         public async Task<bool> Send(User request, CancellationToken cancellationToken)

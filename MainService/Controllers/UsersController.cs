@@ -21,7 +21,7 @@ namespace SenderService.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(User user, CancellationToken cancellationToken)
         {
-            bool commandResult = await _mediator.Send(user);
+            bool commandResult = await _mediator.Send(user, cancellationToken);
 
             if (!commandResult)
             {
