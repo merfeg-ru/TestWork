@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 
 namespace SenderService.Commands
 {
-    public class DataBusSenderCommandHandler : IRequestHandler<User, bool>
+    public class SenderCommandHandler : IRequestHandler<User, bool>
     {
-        private readonly IDataBusSenderService _dataBusSenderService;
-        private readonly ILogger<DataBusSenderCommandHandler> _logger;
+        private readonly ISenderService _dataBusSenderService;
+        private readonly ILogger<SenderCommandHandler> _logger;
 
-        public DataBusSenderCommandHandler(ILogger<DataBusSenderCommandHandler> logger, IDataBusSenderService dataBusSenderService)
+        public SenderCommandHandler(ILogger<SenderCommandHandler> logger, ISenderService dataBusSenderService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dataBusSenderService = dataBusSenderService ?? throw new ArgumentNullException(nameof(dataBusSenderService));

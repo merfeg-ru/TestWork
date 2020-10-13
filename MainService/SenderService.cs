@@ -8,13 +8,13 @@ using CommonData;
 
 namespace SenderService
 {
-    public class DataBusSenderService : IDataBusSenderService
+    public class SenderService : ISenderService
     {
-        private readonly ILogger<DataBusSenderService> _logger;
+        private readonly ILogger<SenderService> _logger;
         private readonly IPublishEndpoint _endpoint;
 
 
-        public DataBusSenderService(ILogger<DataBusSenderService> logger, IPublishEndpoint endpoint)
+        public SenderService(ILogger<SenderService> logger, IPublishEndpoint endpoint)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));

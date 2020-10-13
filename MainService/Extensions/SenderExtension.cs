@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace SenderService.Extensions
 {
-    public static class DataBusSenderExtension
+    public static class SenderExtension
     {
         public static IServiceCollection RegisterDataSenderServices(this IServiceCollection services, IConfiguration section)
         {
@@ -25,7 +25,7 @@ namespace SenderService.Extensions
             services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
-            services.AddSingleton<IDataBusSenderService, DataBusSenderService>();
+            services.AddSingleton<ISenderService, SenderService>();
 
             return services;
         }
