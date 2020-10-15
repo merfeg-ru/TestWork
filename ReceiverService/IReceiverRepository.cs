@@ -14,6 +14,14 @@ namespace ReceiverService
         /// </summary>
         void Initialize();
 
-        Task AddUserAsync(UserDTO user);
+        Task<int> AddUserAsync(UserDTO user);
+
+        IQueryable<UserDTO> GetUsers();
+
+        IQueryable<OrganizationDTO> GetOrganizations();
+
+        Task AddUserToOrganizationAsync(int userId, int organizationId);
+
+        Task<UserDTO> UpdateUserAsync(UserDTO user);
     }
 }

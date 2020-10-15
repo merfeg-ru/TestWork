@@ -32,8 +32,8 @@ namespace ReceiverService
                     $"]");
 
                 // Запись в БД
-                await _receiverService.AddUserAsync(context.Message.User);
-                _logger.LogWarning("Данные записаны в БД");
+                var id = await _receiverService.AddUserAsync(context.Message.User);
+                _logger.LogWarning($"Данные записаны c ID: {id}");
             }
             catch (Exception ex)
             {

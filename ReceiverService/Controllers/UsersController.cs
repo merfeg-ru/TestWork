@@ -9,10 +9,10 @@ namespace ReceiverService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TempController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public string Get()
+        [HttpPost]
+        public string Post()
         {
             return "OK";
         }

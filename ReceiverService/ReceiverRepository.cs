@@ -1,4 +1,5 @@
 ﻿using CommonData;
+using Microsoft.EntityFrameworkCore;
 using ReceiverService.Context;
 using ReceiverService.Models;
 using System;
@@ -17,10 +18,46 @@ namespace ReceiverService
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task AddUserAsync(UserDTO userDTO)
+        public async Task<int> AddUserAsync(UserDTO userDTO)
         {
-            _context.Users.Add(userDTO);
+            await _context.Users.AddAsync(userDTO);
             await _context.SaveChangesAsync();
+            return userDTO.UserId;
+        }
+
+        public async Task AddUserToOrganizationAsync(int userId, int organizationId)
+        {
+            var dbUser = _context.Users.AsNoTracking().FirstOrDefault(user => user.UserId == userId) ??
+                throw new ArgumentException($"Пользователь с id:{userId} не найден.");
+
+            var dbOrganization = _context.Organizations.AsNoTracking().FirstOrDefault(org => org.OrganizationId == organizationId) ??
+                throw new ArgumentException($"Организация с id:{organizationId} не найдена.");
+
+            dbUser.Organization = dbOrganization;
+
+            await UpdateUserAsync(dbUser);
+        }
+
+        public IQueryable<OrganizationDTO> GetOrganizations() =>
+            _context.Organizations.AsNoTracking();
+
+        public IQueryable<UserDTO> GetUsers() =>
+            _context.Users.AsNoTracking();
+
+        public async Task<UserDTO> UpdateUserAsync(UserDTO user)
+        {
+            var dbUser = _context.Users.FirstOrDefault(u => u.UserId == user.UserId) ?? 
+                throw new ArgumentException($"Пользователь с id:{user.UserId} не найден.");
+
+            dbUser.FirstName = user.FirstName;
+            dbUser.EMail = user.EMail;
+            dbUser.LastName = user.LastName;
+            dbUser.MiddleName = user.MiddleName;
+            dbUser.Organization = user.Organization;
+            dbUser.PhoneNumber = user.PhoneNumber;
+
+            await _context.SaveChangesAsync();
+            return dbUser;
         }
 
         /// <summary>
@@ -50,7 +87,5 @@ namespace ReceiverService
                 _context.SaveChanges();
             }
         }
-
-
     }
 }

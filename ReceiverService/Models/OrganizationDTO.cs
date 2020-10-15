@@ -9,7 +9,7 @@ namespace ReceiverService.Models
     [Table("Organizations")]
     public class OrganizationDTO
     {
-        public int Id { get; set; }
+        public int OrganizationId { get; set; }
         public string Name { get; set; }
 
         public List<UserDTO> Users { get; set; }

@@ -28,7 +28,7 @@ namespace ReceiverService
         {
             try
             {
-                //Инициализация подписки на шину данных
+                //Подписка на информацию шины данных
                 var busSettings = _configuration.GetSection("BusSettings");
                 var userChangeHandler = _busControl.ConnectReceiveEndpoint(busSettings["QueueName"], x =>
                 {
