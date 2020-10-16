@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ReceiverService.Extensions;
+using ReceiverService.Middleware;
 
 namespace ReceiverService
 {
@@ -25,7 +26,15 @@ namespace ReceiverService
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .ConfigureApiBehaviorOptions(options =>
+                    {
+                        options.InvalidModelStateResponseFactory = context =>
+                        {
+                            return new BadRequestObjectResult(context.ModelState);
+                        };
+                    });
+
             services.RegisterDataReceiverServices(Configuration);
         }
 
@@ -39,6 +48,8 @@ namespace ReceiverService
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseEndpoints(endpoints =>
             {

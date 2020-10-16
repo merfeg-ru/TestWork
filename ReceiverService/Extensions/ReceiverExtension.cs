@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using ReceiverService.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ReceiverService.Extensions
@@ -44,8 +46,11 @@ namespace ReceiverService.Extensions
             string connection = configuration.GetConnectionString("UserDataBase");
             services.AddDbContext<UsersContext>(options => options.UseNpgsql(connection));
 
-            // Controllers
-            services.AddControllersWithViews();
+            //// Controllers
+            //services.AddControllersWithViews();
+
+            // MediatR
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             return services;
         }

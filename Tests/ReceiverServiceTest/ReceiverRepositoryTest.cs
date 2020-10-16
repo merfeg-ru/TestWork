@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using ReceiverService;
 using ReceiverService.Context;
 using ReceiverService.Models;
+using System.Threading;
 
 namespace ReceiverServiceTest
 {
@@ -38,7 +39,7 @@ namespace ReceiverServiceTest
                     MiddleName = mName,
                     EMail = eMail,
                     PhoneNumber = phone
-                });
+                }, CancellationToken.None);
             }
 
             // Проверка результата
@@ -79,7 +80,7 @@ namespace ReceiverServiceTest
                 var user = repository.GetUsers().FirstOrDefault();
                 var org = repository.GetOrganizations().FirstOrDefault(o => o.Name == orgName);
 
-                await repository.AddUserToOrganizationAsync(user.UserId, org.OrganizationId);
+                await repository.AddUserToOrganizationAsync(user.UserId, org.OrganizationId, CancellationToken.None);
 
                 var userTest = context.Users.Include(u => u.Organization).FirstOrDefault();
                 Assert.Equal(orgName, userTest.Organization.Name);
@@ -145,7 +146,7 @@ namespace ReceiverServiceTest
                 user.EMail = eMail;
                 user.PhoneNumber = phone;
 
-                await repository.UpdateUserAsync(user);
+                await repository.UpdateUserAsync(user, CancellationToken.None);
 
                 var userTest = repository.GetUsers().FirstOrDefault();
                 Assert.Equal(fName, userTest.FirstName);

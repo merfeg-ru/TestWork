@@ -1,7 +1,12 @@
-﻿using MassTransit;
+﻿using FluentValidation;
+using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
+using SenderService.Models;
+using SenderService.Validators;
+using System.Reflection;
 
 namespace SenderService.Extensions
 {
@@ -9,22 +14,29 @@ namespace SenderService.Extensions
     {
         public static IServiceCollection RegisterDataSenderServices(this IServiceCollection services, IConfiguration section)
         {
-            var appSettings = section.GetSection("BusSettings");
-
+            // Bus
+            var busSettings = section.GetSection("BusSettings");
             services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                cfg.Host(appSettings["HostName"], appSettings["VirtualHost"],
+                cfg.Host(busSettings["HostName"], busSettings["VirtualHost"],
                     h => {
-                        h.Username(appSettings["UserName"]);
-                        h.Password(appSettings["Password"]);
+                        h.Username(busSettings["UserName"]);
+                        h.Password(busSettings["Password"]);
                     });
 
                 cfg.ExchangeType = ExchangeType.Direct;
             }));
-
             services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
             services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
+
+            // Validator
+            services.AddTransient<IValidator<User>, UserValidator>();
+
+            // MediatR
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // Main service
             services.AddSingleton<ISenderService, SenderService>();
 
             return services;

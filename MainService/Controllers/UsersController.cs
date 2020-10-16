@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using SenderService.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SenderService.Commands;
 
 namespace SenderService.Controllers
 {
@@ -21,7 +22,7 @@ namespace SenderService.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(User user, CancellationToken cancellationToken)
         {
-            bool commandResult = await _mediator.Send(user, cancellationToken);
+            bool commandResult = await _mediator.Send(new SenderCommand(user), cancellationToken);
 
             if (!commandResult)
             {

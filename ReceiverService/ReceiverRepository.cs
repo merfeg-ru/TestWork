@@ -1,10 +1,12 @@
 ﻿using CommonData;
 using Microsoft.EntityFrameworkCore;
 using ReceiverService.Context;
+using ReceiverService.Exceptions;
 using ReceiverService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ReceiverService
@@ -18,24 +20,24 @@ namespace ReceiverService
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<int> AddUserAsync(UserDTO userDTO)
+        public async Task<int> AddUserAsync(UserDTO userDTO, CancellationToken cancellationToken)
         {
-            await _context.Users.AddAsync(userDTO);
-            await _context.SaveChangesAsync();
+            await _context.Users.AddAsync(userDTO, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
             return userDTO.UserId;
         }
 
-        public async Task AddUserToOrganizationAsync(int userId, int organizationId)
+        public async Task AddUserToOrganizationAsync(int userId, int organizationId, CancellationToken cancellationToken)
         {
             var dbUser = _context.Users.AsNoTracking().FirstOrDefault(user => user.UserId == userId) ??
-                throw new ArgumentException($"Пользователь с id:{userId} не найден.");
+                throw new EntityNotFoundException("Пользователь", userId);
 
             var dbOrganization = _context.Organizations.AsNoTracking().FirstOrDefault(org => org.OrganizationId == organizationId) ??
-                throw new ArgumentException($"Организация с id:{organizationId} не найдена.");
+                throw new EntityNotFoundException("Организация", organizationId);
 
             dbUser.Organization = dbOrganization;
 
-            await UpdateUserAsync(dbUser);
+            await UpdateUserAsync(dbUser, cancellationToken);
         }
 
         public IQueryable<OrganizationDTO> GetOrganizations() =>
@@ -44,10 +46,10 @@ namespace ReceiverService
         public IQueryable<UserDTO> GetUsers() =>
             _context.Users.AsNoTracking();
 
-        public async Task<UserDTO> UpdateUserAsync(UserDTO user)
+        public async Task<UserDTO> UpdateUserAsync(UserDTO user, CancellationToken cancellationToken)
         {
-            var dbUser = _context.Users.FirstOrDefault(u => u.UserId == user.UserId) ?? 
-                throw new ArgumentException($"Пользователь с id:{user.UserId} не найден.");
+            var dbUser = _context.Users.FirstOrDefault(u => u.UserId == user.UserId) ??
+                throw new EntityNotFoundException("Пользователь", user.UserId);
 
             dbUser.FirstName = user.FirstName;
             dbUser.EMail = user.EMail;
@@ -56,7 +58,7 @@ namespace ReceiverService
             dbUser.Organization = user.Organization;
             dbUser.PhoneNumber = user.PhoneNumber;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
             return dbUser;
         }
 

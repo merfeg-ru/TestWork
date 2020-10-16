@@ -35,12 +35,8 @@ namespace SenderService
                         };
                     });
 
-            // Validator
-            services.AddTransient<IValidator<User>, UserValidator>();
             // Bus
             services.RegisterDataSenderServices(Configuration);
-            // MediatR
-            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

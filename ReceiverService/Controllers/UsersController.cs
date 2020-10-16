@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using ReceiverService.Models;
+using ReceiverService.Queries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ReceiverService.Controllers
 {
@@ -11,10 +14,18 @@ namespace ReceiverService.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        [HttpPost]
-        public string Post()
+        private readonly IMediator _mediator;
+
+        public UsersController(IMediator mediator)
         {
-            return "OK";
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<User>> Get(CancellationToken cancellationToken)
+        {
+            var query = new GetListUsersQuery();
+            return await _mediator.Send(query, cancellationToken);
         }
     }
 }

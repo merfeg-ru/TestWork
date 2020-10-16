@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SenderService.Commands
 {
-    public class SenderCommandHandler : IRequestHandler<User, bool>
+    public class SenderCommandHandler : IRequestHandler<SenderCommand, bool>
     {
         private readonly ISenderService _dataBusSenderService;
         private readonly ILogger<SenderCommandHandler> _logger;
@@ -18,10 +18,10 @@ namespace SenderService.Commands
             _dataBusSenderService = dataBusSenderService ?? throw new ArgumentNullException(nameof(dataBusSenderService));
         }
 
-        public async Task<bool> Handle(User request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(SenderCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Отправка данных [{request}]...");
-            bool result = await _dataBusSenderService.Send(request, cancellationToken);
+            _logger.LogInformation($"Отправка данных [{request.User}]...");
+            bool result = await _dataBusSenderService.Send(request.User, cancellationToken);
             if (result)
             {
                 _logger.LogInformation("Отправка данных завершилась успешно");
