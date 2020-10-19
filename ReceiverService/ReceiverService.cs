@@ -1,4 +1,5 @@
-﻿using CommonData;
+﻿using AutoMapper;
+using CommonData;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,13 +20,15 @@ namespace ReceiverService
         private const int PAGE_NUMBER_DEFAULT = 1;
 
         private readonly IReceiverRepository _repository;
+        private readonly IMapper _mapper;
 
         // Признак выполнена ли первичная инициализация репозитория
         private static bool isInitRepository = false;
 
-        public ReceiverService(IReceiverRepository repository)
+        public ReceiverService(IReceiverRepository repository, IMapper mapper)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
             InitializeReceiverRepository();
         }
@@ -35,14 +38,18 @@ namespace ReceiverService
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            var userDTO = new UserDTO
-            {
-                EMail = user.EMail,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                MiddleName = user.MiddleName,
-                PhoneNumber = user.PhoneNumber
-            };
+            //var dest = mapper.Map<Source, Destination>(new Source { Value = 15 });
+            var userDTO = _mapper.Map<IUser, UserDTO>(user);
+
+
+            //var userDTO = new UserDTO
+            //{
+            //    EMail = user.EMail,
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName,
+            //    MiddleName = user.MiddleName,
+            //    PhoneNumber = user.PhoneNumber
+            //};
 
             return await _repository.AddUserAsync(userDTO, cancellationToken);
         }

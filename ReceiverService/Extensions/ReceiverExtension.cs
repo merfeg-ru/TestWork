@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +52,9 @@ namespace ReceiverService.Extensions
 
             // MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // AutoMapper
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }
