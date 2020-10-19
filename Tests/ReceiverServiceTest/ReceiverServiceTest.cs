@@ -98,8 +98,56 @@ namespace ReceiverTest
             var result = await service.GetUsersPageCountAsync(1, pageSize, CancellationToken.None);
             var expected = (userCount / pageSize) + 1;
 
+            Assert.Equal((int)expected, (int)result);
+        }
 
-            Assert.Equal(expected, result);
+        [Theory, AutoData]
+        public async Task GetUsersPaginationAsyncTest(int userCount, int pageSize, int pageNumber)
+        {
+            int orgId = 1;
+
+            var repository = A.Fake<IReceiverRepository>();
+
+            var org = new OrganizationDTO
+            {
+                Name = "org",
+                OrganizationId = orgId
+            };
+
+            var userList = new List<UserDTO>();
+            for (int i = 0; i < userCount; i++)
+            {
+                userList.Add(new UserDTO
+                {
+                    FirstName = $"user{i}",
+                    Organization = org
+                });
+            }
+
+            A.CallTo(() => repository.GetUsers())
+                .Returns(userList.AsQueryable().BuildMock());
+
+            var service = new ReceiverService(repository, GetMapper());
+
+            var result = await service.GetUsersPaginationAsync(orgId, pageNumber, pageSize, CancellationToken.None);
+            var pageCount = await service.GetUsersPageCountAsync(orgId, pageSize, CancellationToken.None);
+
+            if (pageNumber > pageCount)
+                pageNumber = pageCount;
+
+            Assert.Equal($"user{pageSize * (pageNumber - 1)}", result[0].FirstName);
+        }
+
+        [Theory, AutoData]
+        public async Task AddUserToOrganizationAsyncTest(int userId, int organizationId)
+        {
+            var repository = A.Fake<IReceiverRepository>();
+            var service = new ReceiverService(repository, GetMapper());
+
+
+
+            var result = await service.AddUserToOrganizationAsync(userId, organizationId, CancellationToken.None);
+            A.CallTo(() => repository.AddUserToOrganizationAsync(userId, organizationId, CancellationToken.None)).MustHaveHappened();
         }
     }
 }

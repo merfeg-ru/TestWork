@@ -65,7 +65,12 @@ namespace Receiver
         public async Task<List<User>> GetUsersPaginationAsync(int organizationId, int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var validPageSize = (pageSize < 1) ? PAGE_SIZE_DEFAULT : pageSize;
-            var validPageNumber = (pageNumber < 1) ? PAGE_NUMBER_DEFAULT : pageSize;
+            var validPageNumber = (pageNumber < 1) ? PAGE_NUMBER_DEFAULT : pageNumber;
+
+            var pageCount = await GetUsersPageCountAsync(organizationId, pageSize, cancellationToken);
+
+            if (validPageNumber > pageCount)
+                validPageNumber = pageCount;
 
             var users = await _repository.GetUsers()
                 .Where(w => w.Organization.OrganizationId == organizationId)
