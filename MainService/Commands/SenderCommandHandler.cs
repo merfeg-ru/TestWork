@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SenderService.Models;
+using Sender.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace SenderService.Commands
+namespace Sender.Commands
 {
     public class SenderCommandHandler : IRequestHandler<SenderCommand, bool>
     {

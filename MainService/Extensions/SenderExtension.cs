@@ -4,11 +4,11 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
-using SenderService.Models;
-using SenderService.Validators;
+using Sender.Models;
+using Sender.Validators;
 using System.Reflection;
 
-namespace SenderService.Extensions
+namespace Sender.Extensions
 {
     public static class SenderExtension
     {

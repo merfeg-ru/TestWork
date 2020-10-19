@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SenderService.Extensions;
+using Sender.Extensions;
 using FluentValidation.AspNetCore;
 using FluentValidation;
-using SenderService.Models;
-using SenderService.Validators;
+using Sender.Models;
+using Sender.Validators;
 using MediatR;
 using System.Reflection;
 
-namespace SenderService
+namespace Sender
 {
     public class Startup
     {

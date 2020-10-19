@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SenderService.Models;
+using Sender.Models;
 
-namespace SenderService.Validators
+namespace Sender.Validators
 {
 	public class UserValidator : AbstractValidator<User>
 	{

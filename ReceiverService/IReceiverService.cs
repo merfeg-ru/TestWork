@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommonData;
 using MassTransit;
-using ReceiverService.Models;
+using Receiver.Models;
 
-namespace ReceiverService
+namespace Receiver
 {
     public interface IReceiverService
     {

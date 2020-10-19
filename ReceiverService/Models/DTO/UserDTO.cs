@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReceiverService.Models
+namespace Receiver.Models
 {
     [Table("Users")]
     public class UserDTO

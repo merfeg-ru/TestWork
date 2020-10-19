@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ReceiverService.Models;
-using ReceiverService.Queries;
+using Receiver.Models;
+using Receiver.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReceiverService.Controllers
+namespace Receiver.Controllers
 {
     [ApiController]
     [Route("[controller]")]

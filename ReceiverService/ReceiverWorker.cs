@@ -5,9 +5,9 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ReceiverService.Context;
+using Receiver.Context;
 
-namespace ReceiverService
+namespace Receiver
 {
     public class ReceiverWorker : BackgroundService
     {

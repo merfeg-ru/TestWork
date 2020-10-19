@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SenderService.Models;
+using Sender.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SenderService.Commands;
+using Sender.Commands;
 
-namespace SenderService.Controllers
+namespace Sender.Controllers
 {
     [ApiController]
     [Route("[controller]")]

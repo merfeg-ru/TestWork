@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ReceiverService.Models;
-using ReceiverService.Queries;
-using ReceiverService.Commands;
+using Receiver.Models;
+using Receiver.Queries;
+using Receiver.Commands;
 
-namespace ReceiverService.Controllers
+namespace Receiver.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,4 +1,4 @@
-﻿using SenderService.Models;
+﻿using Sender.Models;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using System;
@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommonData;
 
-namespace SenderService
+namespace Sender
 {
     public class SenderService : ISenderService
     {

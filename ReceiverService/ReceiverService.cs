@@ -4,15 +4,15 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using ReceiverService.Exceptions;
-using ReceiverService.Models;
+using Receiver.Exceptions;
+using Receiver.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReceiverService
+namespace Receiver
 {
     public class ReceiverService : IReceiverService
     {
@@ -38,19 +38,7 @@ namespace ReceiverService
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            //var dest = mapper.Map<Source, Destination>(new Source { Value = 15 });
             var userDTO = _mapper.Map<IUser, UserDTO>(user);
-
-
-            //var userDTO = new UserDTO
-            //{
-            //    EMail = user.EMail,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    MiddleName = user.MiddleName,
-            //    PhoneNumber = user.PhoneNumber
-            //};
-
             return await _repository.AddUserAsync(userDTO, cancellationToken);
         }
 
@@ -65,9 +53,13 @@ namespace ReceiverService
 
         public async Task<int> GetUsersPageCountAsync(int organizationId, int pageSize, CancellationToken cancellationToken)
         {
-            return await _repository.GetUsers()
+            var countEntities = await _repository.GetUsers()
                 .Where(w => w.Organization.OrganizationId == organizationId)
-                .CountAsync(cancellationToken) / ((pageSize < 1) ? PAGE_SIZE_DEFAULT : pageSize);
+                .CountAsync(cancellationToken);
+
+            var result = countEntities / ((pageSize < 1) ? PAGE_SIZE_DEFAULT : pageSize);
+
+            return result + 1;
         }
 
         public async Task<List<User>> GetUsersPaginationAsync(int organizationId, int pageNumber, int pageSize, CancellationToken cancellationToken)
@@ -75,19 +67,13 @@ namespace ReceiverService
             var validPageSize = (pageSize < 1) ? PAGE_SIZE_DEFAULT : pageSize;
             var validPageNumber = (pageNumber < 1) ? PAGE_NUMBER_DEFAULT : pageSize;
 
-            return await _repository.GetUsers()
+            var users = await _repository.GetUsers()
                 .Where(w => w.Organization.OrganizationId == organizationId)
                 .Skip((validPageNumber - 1) * validPageSize)
                 .Take(validPageSize)
-                .Select(s => new User
-                {
-                    Id = s.UserId,
-                    EMail = s.EMail,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    MiddleName = s.MiddleName,
-                    PhoneNumber = s.PhoneNumber
-                }).ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<List<UserDTO>, List<User>>(users);
         }
 
         public async Task<Organization> AddUserToOrganizationAsync(int userId, int organizationId, CancellationToken cancellationToken)
@@ -99,56 +85,26 @@ namespace ReceiverService
 
             if (orgDto == null) throw new EntityNotFoundException(nameof(Organization), organizationId);
 
-            return new Organization
-            {
-                Name = orgDto.Name,
-                OrganizationId = orgDto.OrganizationId,
-                Users = orgDto.Users.Select(s => new User
-                {
-                    Id = s.UserId,
-                    EMail = s.EMail,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    MiddleName = s.MiddleName,
-                    PhoneNumber = s.PhoneNumber
-                }).ToList()
-            };
+            return _mapper.Map<OrganizationDTO, Organization>(orgDto);
         }
 
         public async Task<List<User>> GetUsersAsync(CancellationToken cancellationToken)
         {
-            return await _repository
+            var userList = await _repository
                 .GetUsers()
-                .Select(u => new User
-                {
-                    EMail = u.EMail,
-                    FirstName = u.FirstName,
-                    Id = u.UserId,
-                    LastName = u.LastName,
-                    MiddleName = u.MiddleName,
-                    PhoneNumber = u.PhoneNumber
-                }).ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<List<UserDTO>, List<User>>(userList);
         }
 
         public async Task<List<Organization>> GetOrganizationsAsync(CancellationToken cancellationToken)
         {
-            return await _repository
+            var orgList = await _repository
                 .GetOrganizations()
                 .Include(org => org.Users)
-                .Select(org => new Organization
-                {
-                    Name = org.Name,
-                    OrganizationId = org.OrganizationId,
-                    Users = org.Users.Select(u => new User
-                    {
-                        EMail = u.EMail,
-                        FirstName = u.FirstName,
-                        Id = u.UserId,
-                        LastName = u.LastName,
-                        MiddleName = u.MiddleName,
-                        PhoneNumber = u.PhoneNumber
-                    }).ToList()
-                }).ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<List<OrganizationDTO>, List<Organization>>(orgList);
         }
 
         public async Task<Organization> GetOrganizationAsync(int organizationId, CancellationToken cancellationToken)
@@ -159,20 +115,7 @@ namespace ReceiverService
 
             if (orgDto == null) throw new EntityNotFoundException(nameof(Organization), organizationId);
 
-            return new Organization
-            {
-                Name = orgDto.Name,
-                OrganizationId = orgDto.OrganizationId,
-                Users = orgDto.Users.Select(s => new User
-                {
-                    Id = s.UserId,
-                    EMail = s.EMail,
-                    FirstName = s.FirstName,
-                    LastName = s.LastName,
-                    MiddleName = s.MiddleName,
-                    PhoneNumber = s.PhoneNumber
-                }).ToList()
-            };
+            return _mapper.Map<OrganizationDTO, Organization>(orgDto);
         }
     }
 }

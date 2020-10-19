@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using ReceiverService.Models;
+using Receiver.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReceiverService.Queries
+namespace Receiver.Queries
 {
     public class GetListOrganizationsQuery : IRequest<List<Organization>> { }
 }

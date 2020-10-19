@@ -8,12 +8,12 @@ using AutoFixture.Xunit2;
 
 using Microsoft.EntityFrameworkCore;
 
-using ReceiverService;
-using ReceiverService.Context;
-using ReceiverService.Models;
+using Receiver;
+using Receiver.Context;
+using Receiver.Models;
 using System.Threading;
 
-namespace ReceiverServiceTest
+namespace ReceiverTest
 {
     [ExcludeFromCodeCoverage]
     public class ReceiverRepositoryTest

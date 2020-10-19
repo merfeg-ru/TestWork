@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ReceiverService.Extensions;
-using ReceiverService.Middleware;
+using Receiver.Extensions;
+using Receiver.Middleware;
 
-namespace ReceiverService
+namespace Receiver
 {
     public class Startup
     {

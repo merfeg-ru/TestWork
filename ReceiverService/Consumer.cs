@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReceiverService
+namespace Receiver
 {
     public class Consumer : IConsumer<IUserMessage>
     {

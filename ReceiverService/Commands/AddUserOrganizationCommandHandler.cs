@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using ReceiverService.Models;
+using Receiver.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReceiverService.Commands
+namespace Receiver.Commands
 {
     public class AddUserOrganizationCommandHandler : IRequestHandler<AddUserOrganizationCommand, Organization>
     {

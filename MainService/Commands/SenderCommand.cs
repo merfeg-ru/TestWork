@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using SenderService.Models;
+using Sender.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SenderService.Commands
+namespace Sender.Commands
 {
     public class SenderCommand : IRequest<bool>
     {

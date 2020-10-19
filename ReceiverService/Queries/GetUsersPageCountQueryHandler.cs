@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ReceiverService.Queries
+namespace Receiver.Queries
 {
     public class GetUsersPageCountQueryHandler : IRequestHandler<GetUsersPageCountQuery, int>
     {

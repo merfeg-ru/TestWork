@@ -1,7 +1,7 @@
 ﻿using CommonData;
 using MediatR;
 
-namespace SenderService.Models
+namespace Sender.Models
 {
 
     public class User : IUser
