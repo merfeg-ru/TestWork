@@ -1,18 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sender.Extensions;
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using Sender.Models;
-using Sender.Validators;
-using MediatR;
-using System.Reflection;
+using Microsoft.Extensions.Logging;
+using Receiver.Extensions;
+using Receiver.Middleware;
 
-namespace Sender
+namespace Receiver
 {
     public class Startup
     {
@@ -26,7 +27,6 @@ namespace Sender
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                    .AddFluentValidation()
                     .ConfigureApiBehaviorOptions(options =>
                     {
                         options.InvalidModelStateResponseFactory = context =>
@@ -35,8 +35,7 @@ namespace Sender
                         };
                     });
 
-            // Bus
-            services.RegisterDataSenderServices(Configuration);
+            services.RegisterDataReceiverServices(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +48,8 @@ namespace Sender
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseEndpoints(endpoints =>
             {
