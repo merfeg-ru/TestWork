@@ -1,17 +1,14 @@
-﻿using AutoMapper;
-using MassTransit;
-using MediatR;
+﻿using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+
+using AutoMapper;
+using MassTransit;
+using MediatR;
+
 using Receiver.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Receiver.Extensions
 {
@@ -46,9 +43,6 @@ namespace Receiver.Extensions
             // Data Base
             string connection = configuration.GetConnectionString("UserDataBase");
             services.AddDbContext<UsersContext>(options => options.UseNpgsql(connection));
-
-            //// Controllers
-            //services.AddControllersWithViews();
 
             // MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());

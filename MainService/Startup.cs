@@ -4,13 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sender.Extensions;
+
 using FluentValidation.AspNetCore;
-using FluentValidation;
-using Sender.Models;
-using Sender.Validators;
-using MediatR;
-using System.Reflection;
+
+using Sender.Extensions;
 
 namespace Sender
 {

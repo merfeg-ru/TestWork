@@ -1,10 +1,9 @@
-﻿using MediatR;
-using Receiver.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
+using MediatR;
+using Receiver.Models;
 
 namespace Receiver.Queries
 {

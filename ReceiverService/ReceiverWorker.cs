@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Receiver.Context;
+
+using MassTransit;
 
 namespace Receiver
 {

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Sender.Models;
-using MediatR;
+
 using Microsoft.Extensions.Logging;
+using MediatR;
+
 
 namespace Sender.Commands
 {

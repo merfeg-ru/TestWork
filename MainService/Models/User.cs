@@ -1,5 +1,4 @@
 ﻿using CommonData;
-using MediatR;
 
 namespace Sender.Models
 {

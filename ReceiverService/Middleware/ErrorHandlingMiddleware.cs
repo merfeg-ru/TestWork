@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Receiver.Exceptions;
-using System;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
+
+using Receiver.Exceptions;
+
 
 namespace Receiver.Middleware
 {

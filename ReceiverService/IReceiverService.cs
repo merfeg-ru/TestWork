@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
 using CommonData;
-using MassTransit;
 using Receiver.Models;
 
 namespace Receiver
