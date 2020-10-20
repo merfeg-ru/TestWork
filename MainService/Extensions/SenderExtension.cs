@@ -1,12 +1,16 @@
-﻿using FluentValidation;
-using MassTransit;
-using MediatR;
+﻿using System.Reflection;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+using FluentValidation;
+using MassTransit;
+using MediatR;
 using RabbitMQ.Client;
+
 using Sender.Models;
 using Sender.Validators;
-using System.Reflection;
+
 
 namespace Sender.Extensions
 {

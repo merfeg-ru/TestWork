@@ -1,8 +1,6 @@
-using AutoFixture.Xunit2;
 using CommonData;
 using FakeItEasy;
 using MassTransit;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sender;
 using Microsoft.Extensions.Logging;
 using System.Threading;

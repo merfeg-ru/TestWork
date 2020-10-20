@@ -1,10 +1,13 @@
-﻿using Sender.Models;
-using MassTransit;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.Extensions.Logging;
+
+using MassTransit;
+
 using CommonData;
+using Sender.Models;
 
 namespace Sender
 {

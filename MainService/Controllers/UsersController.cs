@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Sender.Models;
-using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+
+using Sender.Models;
 using Sender.Commands;
 
 namespace Sender.Controllers

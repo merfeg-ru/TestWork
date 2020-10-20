@@ -1,13 +1,13 @@
-﻿using CommonData;
-using Microsoft.EntityFrameworkCore;
-using Receiver.Context;
-using Receiver.Exceptions;
-using Receiver.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+
+using Receiver.Context;
+using Receiver.Exceptions;
+using Receiver.Models;
 
 namespace Receiver
 {

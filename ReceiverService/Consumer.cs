@@ -1,11 +1,11 @@
-﻿using CommonData;
-using MassTransit;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Microsoft.Extensions.Logging;
+using MassTransit;
+
+using CommonData;
 
 namespace Receiver
 {
