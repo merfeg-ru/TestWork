@@ -56,6 +56,7 @@ namespace Receiver.Extensions
             // AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+
             return services;
         }
     }

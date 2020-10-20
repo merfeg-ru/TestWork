@@ -144,10 +144,66 @@ namespace ReceiverTest
             var repository = A.Fake<IReceiverRepository>();
             var service = new ReceiverService(repository, GetMapper());
 
+            var user = new UserDTO { UserId = userId };
+            var org = new OrganizationDTO { OrganizationId = organizationId };
 
+            A.CallTo(() => repository.GetUsers())
+                .Returns(new List<UserDTO> { user }.AsQueryable().BuildMock());
+
+            A.CallTo(() => repository.GetOrganizations())
+                .Returns(new List<OrganizationDTO> { org }.AsQueryable().BuildMock());
 
             var result = await service.AddUserToOrganizationAsync(userId, organizationId, CancellationToken.None);
             A.CallTo(() => repository.AddUserToOrganizationAsync(userId, organizationId, CancellationToken.None)).MustHaveHappened();
+        }
+
+        [Theory, AutoData]
+        public async Task GetUsersAsyncTest(string str1, string str2, string str3)
+        {
+            var repository = A.Fake<IReceiverRepository>();
+            var tempOrg = new List<UserDTO>
+            {
+                new UserDTO { FirstName = str1 },
+                new UserDTO { FirstName = str2 },
+                new UserDTO { FirstName = str3 }
+            };
+
+            A.CallTo(() => repository.GetUsers())
+                .Returns(tempOrg.AsQueryable().BuildMock());
+
+            var service = new ReceiverService(repository, GetMapper());
+            var result = await service.GetUsersAsync(CancellationToken.None);
+
+            Assert.Equal(str1, result[0].FirstName = str1);
+            Assert.Equal(str2, result[1].FirstName = str2);
+            Assert.Equal(str3, result[2].FirstName = str3);
+        }
+
+        [Theory, AutoData]
+        public async Task GetOrganizationAsyncTest(int orgId, string strOrg, string strUser)
+        {
+            var repository = A.Fake<IReceiverRepository>();
+            var tempOrg = new OrganizationDTO 
+            { 
+                OrganizationId = orgId, 
+                Name = strOrg, 
+                Users = new List<UserDTO> 
+                { 
+                    new UserDTO 
+                    { 
+                        FirstName = strUser 
+                    } 
+                } 
+            };
+
+            A.CallTo(() => repository.GetOrganizations())
+                .Returns(new List<OrganizationDTO> { tempOrg }.AsQueryable().BuildMock());
+
+            var service = new ReceiverService(repository, GetMapper());
+            var result = await service.GetOrganizationAsync(orgId, CancellationToken.None);
+
+            Assert.Equal(strOrg, result.Name);
+            Assert.Equal(strUser, result.Users[0].FirstName);
         }
     }
 }
