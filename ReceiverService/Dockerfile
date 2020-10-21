@@ -7,17 +7,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["MainService/SenderService.csproj", "MainService/"]
+COPY ["ReceiverService/ReceiverService.csproj", "ReceiverService/"]
 COPY ["CommonData/CommonData.csproj", "CommonData/"]
-RUN dotnet restore "MainService/SenderService.csproj"
+RUN dotnet restore "ReceiverService/ReceiverService.csproj"
 COPY . .
-WORKDIR "/src/MainService"
-RUN dotnet build "SenderService.csproj" -c Release -o /app/build
+WORKDIR "/src/ReceiverService"
+RUN dotnet build "ReceiverService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SenderService.csproj" -c Release -o /app/publish
+RUN dotnet publish "ReceiverService.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Sender.dll"]
+ENTRYPOINT ["dotnet", "Receiver.dll"]

@@ -6,6 +6,7 @@
     <RootNamespace>Sender</RootNamespace>
     <UserSecretsId>57d5db5c-d104-4ff6-a565-016c6a68ab8b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
