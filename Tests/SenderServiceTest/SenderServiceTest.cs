@@ -1,4 +1,4 @@
-using CommonData;
+﻿using CommonData;
 using FakeItEasy;
 using MassTransit;
 using Sender;

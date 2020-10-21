@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
@@ -21,12 +21,9 @@ namespace ReceiverTest
         [Theory, AutoData]
         public async Task AddUserAsyncTest(string fName, string lName, string mName, string eMail, string phone)
         {
-            // Создание БД в памяти
             var options = new DbContextOptionsBuilder<UsersContext>()
                 .UseInMemoryDatabase(databaseName: "AddUserAsync")
                 .Options;
-
-            // Добавление данных в БД
 
             var userId = 0;
             using (var context = new UsersContext(options))
@@ -42,7 +39,6 @@ namespace ReceiverTest
                 }, CancellationToken.None);
             }
 
-            // Проверка результата
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
@@ -59,12 +55,10 @@ namespace ReceiverTest
         [Theory, AutoData]
         public async Task AddUserToOrganizationAsyncTest(string orgName)
         {
-            // Создание БД в памяти
             var options = new DbContextOptionsBuilder<UsersContext>()
                 .UseInMemoryDatabase(databaseName: "AddUserToOrganizationAsync")
                 .Options;
 
-            // Добавление данных в БД
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
@@ -73,7 +67,6 @@ namespace ReceiverTest
                 context.SaveChanges();
             }
 
-            // Проверка результата
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
@@ -90,12 +83,10 @@ namespace ReceiverTest
         [Theory, AutoData]
         public void GetOrganizationsTest(string orgName)
         {
-            // Создание БД в памяти
             var options = new DbContextOptionsBuilder<UsersContext>()
                 .UseInMemoryDatabase(databaseName: "GetOrganizations")
                 .Options;
 
-            // Добавление данных в БД
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
@@ -109,7 +100,6 @@ namespace ReceiverTest
                 context.SaveChanges();
             }
 
-            // Проверка результата
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
@@ -123,19 +113,16 @@ namespace ReceiverTest
         [Theory, AutoData]
         public async void UpdateUserAsyncTest(string fName, string lName, string mName, string eMail, string phone)
         {
-            // Создание БД в памяти
             var options = new DbContextOptionsBuilder<UsersContext>()
                 .UseInMemoryDatabase(databaseName: "UpdateUser")
                 .Options;
 
-            // Добавление данных в БД
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
                 repository.Initialize();
             }
 
-            // Проверка результата
             using (var context = new UsersContext(options))
             {
                 var repository = new ReceiverRepository(context);
