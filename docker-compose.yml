@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  receiverservice:
+    image: ${DOCKER_REGISTRY-}receiverservice
+    build:
+      context: .
+      dockerfile: ReceiverService/Dockerfile
+    links:
+      - postgres
+      - rabbitmq
+
+  senderservice:
+    image: ${DOCKER_REGISTRY-}senderservice
+    build:
+      context: .
+      dockerfile: MainService/Dockerfile
+    links:
+      - rabbitmq
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+
+  rabbitmq:
+    image: rabbitmq
